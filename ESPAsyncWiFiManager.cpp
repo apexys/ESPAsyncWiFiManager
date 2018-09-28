@@ -361,7 +361,7 @@ void AsyncWiFiManager::loop(){
 	yield();
 	safeLoop();
 	criticalLoop();
-	ESP.wdtReset();
+	ESP.wdtFeed();
 }
 
 void AsyncWiFiManager::setInfo() {
