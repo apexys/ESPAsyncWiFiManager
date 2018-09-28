@@ -130,7 +130,7 @@ void AsyncWiFiManager::setupConfigPortal() {
   //server->on("/generate_204", std::bind(&AsyncWiFiManager::handle204, this));  //Android/Chrome OS captive portal check.
   server->on("/fwlink", std::bind(&AsyncWiFiManager::handleRoot, this,std::placeholders::_1)).setFilter(ON_AP_FILTER);  //Microsoft captive portal. Maybe not needed. Might be handled by notFound handler.
   server->onNotFound (std::bind(&AsyncWiFiManager::handleNotFound,this,std::placeholders::_1));
-  ESP.resetWdt();
+ESP.wdtFeed(); 
   yield();
   server->begin(); // Web server start
   DEBUG_WM(F("HTTP server started"));
