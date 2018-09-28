@@ -357,8 +357,10 @@ void AsyncWiFiManager::startConfigPortalModeless(char const *apName, char const 
 }
 
 void AsyncWiFiManager::loop(){
+	yield();
 	safeLoop();
 	criticalLoop();
+	ESP.wdtReset();
 }
 
 void AsyncWiFiManager::setInfo() {
