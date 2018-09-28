@@ -547,12 +547,6 @@ int AsyncWiFiManager::connectWifi(String ssid, String pass) {
   int connRes = waitForConnectResult();
   DEBUG_WM ("Connection result: ");
   DEBUG_WM ( connRes );
-  //not connected, WPS enabled, no pass - first attempt
-  if (_tryWPS && connRes != WL_CONNECTED && pass == "") {
-    startWPS();
-    //should be connected at the end of WPS
-    connRes = waitForConnectResult();
-  }
 
   needInfo = true;
   setInfo();
@@ -582,47 +576,8 @@ uint8_t AsyncWiFiManager::waitForConnectResult() {
   }
 }
 
-void AsyncWiFiManager::startWPS() {
-  DEBUG_WM("START WPS");
-#if defined(ESP8266)
-  WiFi.beginWPSConfig();
-#else
-  //esp_wps_config_t config = WPS_CONFIG_INIT_DEFAULT(ESP_WPS_MODE);
-  esp_wps_config_t config = {};
-  config.wps_type = ESP_WPS_MODE;
-  config.crypto_funcs = &g_wifi_default_wps_crypto_funcs;
-  strcpy(config.factory_info.manufacturer,"ESPRESSIF");  
-  strcpy(config.factory_info.model_number, "ESP32");  
-  strcpy(config.factory_info.model_name, "ESPRESSIF IOT");  
-  strcpy(config.factory_info.device_name,"ESP STATION");  
 
-  esp_wifi_wps_enable(&config);
-  esp_wifi_wps_start(0);
-#endif
-  DEBUG_WM("END WPS");
 
-}
-/*
-String AsyncWiFiManager::getSSID() {
-if (_ssid == "") {
-DEBUG_WM(F("Reading SSID"));
-_ssid = WiFi.SSID();
-DEBUG_WM(F("SSID: "));
-DEBUG_WM(_ssid);
-}
-return _ssid;
-}
-
-String AsyncWiFiManager::getPassword() {
-if (_pass == "") {
-DEBUG_WM(F("Reading Password"));
-_pass = WiFi.psk();
-DEBUG_WM("Password: " + _pass);
-//DEBUG_WM(_pass);
-}
-return _pass;
-}
-*/
 String AsyncWiFiManager::getConfigPortalSSID() {
   return _apName;
 }

@@ -18,8 +18,6 @@
 #include <ESP8266WiFi.h>          //https://github.com/esp8266/Arduino
 #else
 #include <WiFi.h>
-#include "esp_wps.h"
-#define ESP_WPS_MODE WPS_TYPE_PBC
 #endif
 #include <ESPAsyncWebServer.h>
 
@@ -150,8 +148,6 @@ public:
   void          addParameter(AsyncWiFiManagerParameter *p);
   //if this is set, it will exit after config, even if connection is unsucessful.
   void          setBreakAfterConfig(boolean shouldBreak);
-  //if this is set, try WPS setup when starting (this will delay config portal for up to 2 mins)
-  //TODO
   //if this is set, customise style
   void          setCustomHeadElement(const char* element);
   //if this is true, remove duplicated Access Points - defaut true
